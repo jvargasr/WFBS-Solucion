@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c372516d130541018327871e8acdddc7" Name="Diagram1">
+      <Diagram DiagramId="c372516d130541018327871e8acdddc7" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="ModeloWfbs.AREA" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloWfbs.AUDITORIA" Width="1.5" PointX="5.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloWfbs.COMPETENCIA" Width="1.5" PointX="3.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloWfbs.COMPETENCIA" Width="1.5" PointX="10.25" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloWfbs.DETALLE_EVALUACION" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloWfbs.EVALUACION" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloWfbs.HABILIDAD" Width="1.5" PointX="6" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloWfbs.EVALUACION" Width="1.5" PointX="5.5" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloWfbs.HABILIDAD" Width="1.5" PointX="8.125" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloWfbs.OBSERVACION_COMPETENCIA" Width="1.5" PointX="9" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloWfbs.PERFIL" Width="1.5" PointX="1.5" PointY="15.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ModeloWfbs.PERFIL_DE_CARGO" Width="1.5" PointX="1.5" PointY="0.875" IsExpanded="true" />

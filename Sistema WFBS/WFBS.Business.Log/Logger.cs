@@ -10,7 +10,7 @@ namespace WFBS.Business.Log
          *  
          * @var string 
          */
-        private static string __log_file_path = @"c:\log.txt";
+        private static string __log_file_path = @"c:\log_file_wfbs.txt";
 
         /** 
          * __log_file_path get/set 

@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using WFBS.Business.Core;
 
 namespace WFBS.Service
 {
@@ -12,152 +13,38 @@ namespace WFBS.Service
     [ServiceContract]
     public interface IServiceWFBS
     {
-
-        #region Competencia
         [OperationContract]
-        bool CrearCompetencia(string xml);
+        void log(string msg);
 
         [OperationContract]
-        bool ActualizarCompetencia(string xml);
+        bool login(string userxml);
 
         [OperationContract]
-        bool EliminarCompetencia(string xml);
+        string obtenerArea(string id_area);
 
         [OperationContract]
-        string LeerCompetencia(string xml);
+        string obtenerCompetencia(string id_competencia);
 
         [OperationContract]
-        string LeerCompetencias();
-        #endregion Competencia
+        string obtenerUsuario(string rut);
 
-        //---------------------------------------------------------//
+        [OperationContract]//p
+        string obtenerComptenteciasArea(string id_area);
 
-        #region Habilidad
-        [OperationContract]
-        bool CrearHabilidad(string xml);
-
-        [OperationContract]
-        bool ActualizarHabilidad(string xml);
+        [OperationContract]//p
+        string obtenerHabilidadesCompetencia(string id_competencia);
 
         [OperationContract]
-        bool EliminarHabilidad(string xml);
+        bool InsertarEvaluacion(string evaluacionxml);
+
+        //[OperationContract]
+        //Obtener Peridodo evaluacion      
 
         [OperationContract]
-        string LeerHabilidad(string xml);
+        bool usuarioEvaluado(string evaluacionxml);
 
         [OperationContract]
-        string LeerHabilidades();
+        bool insertarAuditoria(string auditoriaxml);
 
-        [OperationContract]
-        string LeerHabPorCom(int id);
-        #endregion Habilidad
-
-        //---------------------------------------------------------//
-
-        #region PeriododeEvaluacion
-        [OperationContract]
-        bool CrearPeriodoEvaluacion(string xml);
-
-        [OperationContract]
-        bool ActualizarPeriodoEvaluacion(string xml);
-
-        [OperationContract]
-        bool EliminarPeriodoEvaluacion(string xml);
-
-        [OperationContract]
-        string LeerPeriodoEvaluacion(string xml);
-
-        [OperationContract]
-        string LeerPeriodosEvaluaciones();
-        #endregion PeriododeEvaluacion
-
-        //---------------------------------------------------------//
-
-        #region Usuario
-        [OperationContract]
-        bool ValidarUsuario(string xml);
-
-        [OperationContract]
-        bool Desactivado(string xml);
-
-        [OperationContract]
-        bool CrearUsuario(string xml);
-
-        [OperationContract]
-        bool ActualizarUsuario(string xml);
-
-        [OperationContract]
-        bool EliminarUsuario(string xml);
-
-        [OperationContract]
-        string LeerUsuario(string xml);
-
-        [OperationContract]
-        string LeerUsuarios();
-        #endregion Usuario
-
-        //---------------------------------------------------------//
-
-        #region Area
-        [OperationContract]
-        bool CrearArea(string xml);
-
-        [OperationContract]
-        bool ActualizarArea(string xml);
-
-        [OperationContract]
-        bool EliminarArea(string xml);
-
-        [OperationContract]
-        string LeerArea(string xml);
-
-        [OperationContract]
-        string LeerAreas();
-        #endregion Area
-
-        //---------------------------------------------------------//
-
-        #region PerfildeCargo
-        [OperationContract]
-        bool CrearPerfildeCargo(string xml);
-        //bool CrearPerfildeCargo(string xml, List<Area> areaSeleccionada);
-
-        [OperationContract]
-        bool ActualizarPerfildeCargo(string xml);
-
-        [OperationContract]
-        bool EliminarPerfildeCargo(string xml);
-
-        [OperationContract]
-        string LeerPerfildeCargo(string xml);
-
-        [OperationContract]
-        string LeerPerfilesdeCargo();
-        #endregion PerfildeCargo
-
-        // TODO: agregue aquí sus operaciones de servicio
     }
-
-    /*
-    // Utilice un contrato de datos, como se ilustra en el ejemplo siguiente, para agregar tipos compuestos a las operaciones de servicio.
-    [DataContract]
-    public class CompositeType
-    {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
-        [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
-
-        [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
-    }*/
 }

@@ -87,6 +87,10 @@
       <Project>{cab796d7-7b64-4ccf-9b31-7a257892eab5}</Project>
       <Name>WFBS.Business.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WFBS.Business.Log\WFBS.Business.Log.csproj">
+      <Project>{d6cfd339-f00d-4873-9bd9-4a0fd323650d}</Project>
+      <Name>WFBS.Business.Log</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -145,7 +145,22 @@ namespace WFBS.Business.Core
                 return false;
             }
         }
+        public int obtener_periodo_evaluacion()
+        {
+            try
+            {
+                DAL.WFBSEntities periodo = new DAL.WFBSEntities();
 
+                DAL.PERIODO_EVALUACION pe = periodo.PERIODO_EVALUACION.First(p=> p.FECHA_INICIO<=DateTime.Now && 
+                DateTime.Now<=p.FECHA_INICIO.AddDays((double)p.VIGENCIA));
+
+                return (int)pe.ID_PERIODO_EVALUACION;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
         public string Serializar()
         {
             try

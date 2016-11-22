@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\Area.cs" />
+    <Compile Include="Clases\Auditoria.cs" />
     <Compile Include="Clases\Competencia.cs" />
+    <Compile Include="Clases\Evaluacion.cs" />
     <Compile Include="Clases\Habilidad.cs" />
     <Compile Include="Clases\Perfil.cs" />
     <Compile Include="Clases\PerfilesdeCargo.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="Clases\Usuario.cs" />
     <Compile Include="Colecciones\ColeccionArea.cs" />
     <Compile Include="Colecciones\ColeccionCompetencia.cs" />
+    <Compile Include="Colecciones\ColeccionEvaluacion.cs" />
     <Compile Include="Colecciones\ColeccionHabilidad.cs" />
     <Compile Include="Colecciones\ColeccionPerfildeCargo.cs" />
     <Compile Include="Colecciones\ColeccionPeriodoEvaluacion.cs" />

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Xml.Serialization;
 using WFBS.Business.Core;
+using WFBS.Business.Log;
 
 namespace WFBS.Service
 {
@@ -13,340 +16,75 @@ namespace WFBS.Service
     // NOTE: para iniciar el Cliente de prueba WCF para probar este servicio, seleccione Service1.svc o Service1.svc.cs en el Explorador de soluciones e inicie la depuración.
     public class ServiceWFBS : IServiceWFBS
     {
-        #region Competencia
-        // Competencia
-        public bool CrearCompetencia(string xml)
+        public void log(string msgxml)
         {
-            Competencia com = new Competencia(xml);
-            return com.Create();
+            XmlSerializer serializer = new XmlSerializer(typeof(string), new XmlRootAttribute("string"));
+            StringReader stringReader = new StringReader(msgxml);
+            string msg = (string)serializer.Deserialize(stringReader);
+            Logger.log(msg);
         }
-
-        public bool ActualizarCompetencia(string xml)
+        public bool login(string userxml)
         {
-            Competencia com = new Competencia(xml);
-            return com.Update();
+            XmlSerializer serializer = new XmlSerializer(typeof(Usuario), new XmlRootAttribute("Usuario"));
+            StringReader stringReader = new StringReader(userxml);
+            Usuario u = (Usuario)serializer.Deserialize(stringReader);
+            return u.ValidarUsuario();
         }
-
-        public bool EliminarCompetencia(string xml)
+        public string obtenerArea(string id_area)
         {
-            Competencia com = new Competencia(xml);
-            return com.Delete();
+            XmlSerializer serializer = new XmlSerializer(typeof(Area), new XmlRootAttribute("Area"));
+            StringReader stringReader = new StringReader(id_area);
+            Area a = (Area)serializer.Deserialize(stringReader);
+            a.Read();
+            return a.Serializar();
         }
-
-        public string LeerCompetencia(string xml)
+        public string obtenerCompetencia(string id_competencia)
         {
-            try
-            {
-                Competencia com = new Competencia(xml);
-                if (com.Read())
-                {
-                    return com.Serializar();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
+            XmlSerializer serializer = new XmlSerializer(typeof(Competencia), new XmlRootAttribute("Competencia"));
+            StringReader stringReader = new StringReader(id_competencia);
+            Competencia c = (Competencia)serializer.Deserialize(stringReader);
+            c.Read();
+            return c.Serializar();
         }
-
-        public string LeerCompetencias()
+        public string obtenerUsuario(string rut)
         {
-            ColeccionCompetencia colCom = new ColeccionCompetencia();
-            return colCom.Serializar(colCom.ReadAllCompetencias());
+            XmlSerializer serializer = new XmlSerializer(typeof(Usuario), new XmlRootAttribute("Usuario"));
+            StringReader stringReader = new StringReader(rut);
+            Usuario u = (Usuario)serializer.Deserialize(stringReader);
+            u.Read();
+            return u.Serializar();
         }
-        #endregion
-
-        //---------------------------------------------------------//
-
-        #region Habilidad
-        // Habilidad
-
-        public bool CrearHabilidad(string xml)
+        public bool InsertarEvaluacion(string evaluacionxml)
         {
-            Habilidad hab = new Habilidad(xml);
-            return hab.Create();
+            Evaluacion e = new Evaluacion(evaluacionxml);
+            return e.Create();
         }
-
-        public bool ActualizarHabilidad(string xml)
+        public bool insertarAuditoria(string auditoriaxml)
         {
-            Habilidad hab = new Habilidad(xml);
-            return hab.Update();
+            Auditoria a = new Auditoria(auditoriaxml);
+            return a.Create();
         }
-
-        public bool EliminarHabilidad(string xml)
+        public string obtenerComptenteciasArea(string id_area)
         {
-            Habilidad hab = new Habilidad(xml);
-            return hab.Delete();
+            XmlSerializer serializer = new XmlSerializer(typeof(Area), new XmlRootAttribute("Area"));
+            StringReader stringReader = new StringReader(id_area);
+            Area a = (Area)serializer.Deserialize(stringReader);
+
+            ColeccionCompetencia cc = new ColeccionCompetencia();
+            return cc.Serializar(cc.ReadAllCompetencias());
         }
-
-        public string LeerHabilidad(string xml)
+        public string obtenerHabilidadesCompetencia(string id_competencia)
         {
-            try
-            {
-                Habilidad hab = new Habilidad(xml);
-                if (hab.Read())
-                {
-                    return hab.Serializar();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
+            XmlSerializer serializer = new XmlSerializer(typeof(Competencia), new XmlRootAttribute("Competencia"));
+            StringReader stringReader = new StringReader(id_competencia);
+            Competencia c = (Competencia)serializer.Deserialize(stringReader);
+            ColeccionHabilidad ch = new ColeccionHabilidad();
+            return ch.Serializar(ch.ObtenerHabPorCom(c.Id_competencia));
         }
-
-        public string LeerHabilidades()
+        public bool usuarioEvaluado(string evaluacionxml)
         {
-            ColeccionHabilidad colCom = new ColeccionHabilidad();
-            return colCom.Serializar(colCom.ReadAllHabilidades());
+            Evaluacion e = new Evaluacion(evaluacionxml);
+            return e.usuarioEvaluado();
         }
-
-        public string LeerHabPorCom(int id)
-        {
-            ColeccionHabilidad colCom = new ColeccionHabilidad();
-            return colCom.Serializar(colCom.ObtenerHabPorCom(id));
-        }
-        #endregion
-
-        //---------------------------------------------------------//
-
-        #region Periodo de evaluacion
-        // Periodo de Evaluacion
-        public bool CrearPeriodoEvaluacion(string xml)
-        {
-            PeriodoEvaluacion pe = new PeriodoEvaluacion(xml);
-            return pe.Create();
-        }
-
-        public bool ActualizarPeriodoEvaluacion(string xml)
-        {
-            PeriodoEvaluacion pe = new PeriodoEvaluacion(xml);
-            return pe.Update();
-        }
-
-        public bool EliminarPeriodoEvaluacion(string xml)
-        {
-            PeriodoEvaluacion pe = new PeriodoEvaluacion(xml);
-            return pe.Delete();
-        }
-
-        public string LeerPeriodoEvaluacion(string xml)
-        {
-            try
-            {
-                PeriodoEvaluacion pe = new PeriodoEvaluacion(xml);
-                if (pe.Read())
-                {
-                    return pe.Serializar();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
-        }
-
-        public string LeerPeriodosEvaluaciones()
-        {
-            ColeccionPeriodoEvaluacion colPE = new ColeccionPeriodoEvaluacion();
-            return colPE.Serializar(colPE.ReadAllPeriodos());
-        }
-        #endregion
-
-        //---------------------------------------------------------//
-
-        #region Usuario
-        // Usuario
-
-        public bool ValidarUsuario(string xml)
-        {
-            try
-            {
-                Usuario us = new Usuario(xml);
-                return us.ValidarUsuario();
-            }
-            catch (Exception ex)
-            {
-                ex.ToString();
-                return false;
-            }
-        }
-
-        public bool CrearUsuario(string xml)
-        {
-            Usuario us = new Usuario(xml);
-            return us.Create();
-        }
-
-        public bool ActualizarUsuario(string xml)
-        {
-            Usuario us = new Usuario(xml);
-            return us.Update();
-        }
-
-        public bool EliminarUsuario(string xml)
-        {
-            Usuario us = new Usuario(xml);
-            return us.Delete();
-        }
-
-        public string LeerUsuario(string xml)
-        {
-            try
-            {
-                Usuario us = new Usuario(xml);
-                if (us.Read())
-                {
-                    return us.Serializar();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
-        }
-
-        public string LeerUsuarios()
-        {
-            ColeccionUsuario colUs = new ColeccionUsuario();
-            return colUs.Serializar(colUs.ReadAllUsuarios());
-        }
-
-        public bool Desactivado(string xml)
-        {
-            try
-            {
-                Usuario us = new Usuario(xml);
-                return us.Desactivado();
-
-            }
-            catch (Exception ex)
-            {
-                ex.ToString();
-                return false;
-            }
-        }
-        #endregion
-
-        //---------------------------------------------------------//
-
-        #region Area
-        // Area
-        public bool CrearArea(string xml)
-        {
-            Area ar = new Area(xml);
-            return ar.Create();
-        }
-
-        public bool ActualizarArea(string xml)
-        {
-            Area ar = new Area(xml);
-            return ar.Update();
-        }
-
-        public bool EliminarArea(string xml)
-        {
-            Area ar = new Area(xml);
-            return ar.Delete();
-        }
-
-        public string LeerArea(string xml)
-        {
-            try
-            {
-                Area ar = new Area(xml);
-                if (ar.Read())
-                {
-                    return ar.Serializar();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
-        }
-
-        public string LeerAreas()
-        {
-            ColeccionArea colArea = new ColeccionArea();
-            return colArea.Serializar(colArea.ReadAllAreas());
-        }
-        #endregion
-
-        //---------------------------------------------------------//
-
-        #region Perfil de cargo
-        // Perfil de Cargo
-        /*public bool CrearPerfildeCargo(string xml, List<Area> areaSeleccionada)
-        {
-            PerfilesdeCargo pc = new PerfilesdeCargo(xml);
-            return pc.Create(areaSeleccionada);
-        }*/
-        public bool CrearPerfildeCargo(string xml)
-        {
-            PerfilesdeCargo pc = new PerfilesdeCargo(xml);
-            List<Area> area = new List<Area>();
-            return pc.Create(area);
-        }
-
-        public bool ActualizarPerfildeCargo(string xml)
-        {
-            PerfilesdeCargo pc = new PerfilesdeCargo(xml);
-            List<Area> area = new List<Area>();
-            return pc.Update(area);
-        }
-
-        public bool EliminarPerfildeCargo(string xml)
-        {
-            PerfilesdeCargo pc = new PerfilesdeCargo(xml);
-            return pc.Delete();
-        }
-
-        public string LeerPerfildeCargo(string xml)
-        {
-            try
-            {
-                PerfilesdeCargo pc = new PerfilesdeCargo(xml);
-                if (pc.Read())
-                {
-                    return pc.Serializar();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
-        }
-
-        public string LeerPerfilesdeCargo()
-        {
-            ColeccionArea colPC = new ColeccionArea();
-            return colPC.Serializar(colPC.ReadAllAreas());
-        }
-        #endregion
     }
 }

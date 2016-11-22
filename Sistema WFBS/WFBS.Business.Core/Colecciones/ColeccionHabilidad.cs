@@ -23,7 +23,6 @@ namespace WFBS.Business.Core
             this.AddRange(lista);
         }
 
-
         public List<Habilidad> ReadAllHabilidades()
         {
             List<DAL.HABILIDAD> habilidadesBDD = CommonBC.ModeloWFBS.HABILIDAD.ToList();

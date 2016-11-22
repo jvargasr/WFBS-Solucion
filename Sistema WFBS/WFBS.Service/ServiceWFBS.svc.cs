@@ -86,5 +86,14 @@ namespace WFBS.Service
             Evaluacion e = new Evaluacion(evaluacionxml);
             return e.usuarioEvaluado();
         }
+        public string obtenerFuncionariosPorJefe(string usuariojefexml)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Usuario), new XmlRootAttribute("Usuario"));
+            StringReader stringReader = new StringReader(usuariojefexml);
+            Usuario u = (Usuario)serializer.Deserialize(stringReader);
+
+            ColeccionUsuario c = new ColeccionUsuario();
+            return c.Serializar(c.ObtenerFuncionariosPorJefe(u.Rut));
+        }
     }
 }

@@ -67,7 +67,15 @@ namespace WFBS.Business.Core
             return usuariosController;
 
         }
-
+        public List<Usuario> ObtenerFuncionariosPorJefe(string rut)
+        {
+            Usuario u = new Usuario();
+            u.Rut = rut;
+            u.Read();
+            string nombre = u.Nombre;
+            var Jefes = CommonBC.ModeloWFBS.USUARIO.Where(usu => usu.JEFE_RESPECTIVO == nombre);
+            return (GenerarListado(Jefes.ToList()));
+        }
 
         public string Serializar(List<Usuario> usuario)
         {

@@ -37,8 +37,8 @@ namespace WFBS.Service
         [OperationContract]
         bool InsertarEvaluacion(string evaluacionxml);
 
-        //[OperationContract]
-        //Obtener Peridodo evaluacion      
+        [OperationContract]
+        string obtenerFuncionariosPorJefe(string usuariojefexml);    
 
         [OperationContract]
         bool usuarioEvaluado(string evaluacionxml);
